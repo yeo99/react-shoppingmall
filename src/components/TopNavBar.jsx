@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 function TopNavBar() {
 
-    // 변수에 useNavigate()훅을 담아서 사용
+    // 변수에 useNavigate()훅을 담아서 사용, 페이지 이동을 도와주는 함수(Hook)
     let navigate = useNavigate();
 
     return(

@@ -3,16 +3,15 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
 import Error404Page from './pages/Error404Page';
+import EventPage from './pages/EventPage';
 
 function App() {
-
-  let navigate = useNavigate(); // 페이지 이동을 도와주는 함수(Hook)
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={ <MainPage/>} />
-        <Route path="/detail" element={ <DetailPage/> }></Route>
+        <Route path="/detail/:id" element={ <DetailPage/> }></Route>
 
         {/* Nested Routes 
             - 장점1. 좀 더 단순하게 작성 가능
@@ -22,6 +21,11 @@ function App() {
         <Route path="/about" element={ <About/> }>
           <Route path="member" element={ <div>Member page</div> }></Route>
           <Route path="location" element={ <div>location page</div> }></Route>
+        </Route>
+
+        <Route path="/event" element={ <EventPage/> }>
+          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
+          <Route path="two" element={<p>생일기념 쿠폰받기</p>}></Route>
         </Route>
 
         {/* 지정된 Route path외의 모든 페이지 */}
