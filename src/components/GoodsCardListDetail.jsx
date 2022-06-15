@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 {/*
     styled-components를 통해 만든 스타일을 변수에 저장하여 사용 가능
@@ -20,17 +21,47 @@ let YellowBtn = styled.button`
     padding : 10px;
 `
 
+{/*
+  컴포넌트의 Life cycle
+  - 페이지가 보이는 순간을 컴포넌트가 장착(Mount)된다.
+  - 컴포넌트에서 state 조작을 하게 되면 컴포넌트가 update되기도 한다. 
+  - 컴포넌트가 더이상 필요가 없으면 제거가 된다(Unmount).
+  => 위 과정들을 컴포넌트의 라이프사이클이라고 한다.
+
+  => 왜 배워야 하나?
+  - 각 동작 중간중간마다 특정 코드를 실행할 수 있다.
+    - ex) 마운트될 때, 업데이트 될 때, 언마운트 될 때,
+  => useEffect()밖에 해도 똑같은데?
+    - useEffect()블럭 내부의 코드는 html 렌더링을 마친 후 이루어진다.(= html 런더링 속도 단축)
+  => 어떤 코드를 쓰나?
+    - 어려운 연산, 서버에서 데이터를 가져오는 작업, 타이머 붙일 때,, etc
+  => 이름은 왜 effect?
+    - side effect(함수의 핵심기능과 상관없는 부가기능)의 effect의 느낌을 따온 듯
+    - 함수(Component)의 핵심기능(html 렌더링) 외의 effect
+*/}
+
+
 // 기존 스타일을 복사하고, 커스터마이징도 가능
-let YellowBtnCp = styled.button(YellowBtn)`
-
-`
-
+// let YellowBtnCp = styled.button(YellowBtn)`
+// `
 let Box = styled.div`
     background: grey;
     padding: 20px;
 `
 
 function GoodsCardListDetail(props) {
+
+    // useEffect 훅 사용
+    useEffect(() => {
+        // 컴포넌트가 mount시, update시 여기 코드가 실행된다.
+        
+        // 2초 후에 코드를 실행
+        setTimeout(()=>{
+            document.querySelector('.alert.alert-warning').remove();
+        }, 2000);
+    })
+
+    let [count, setCount] = useState(0);
 
     let {id} = useParams();   // useParams Hook을 이용하여 파라미터 받아옴
     // 배열 순서가 바뀌어도 문제가 없도록
@@ -43,9 +74,10 @@ function GoodsCardListDetail(props) {
     return (
         <>
             <div className="container">
-                <Box>
+                <div className="alert alert-warning">2초 이내 구매시 할인</div>
+                {/* <Box>
                     <YellowBtn background="blue">버튼</YellowBtn>
-                </Box>
+                </Box> */}
                 <div className="row">
                     <div className="col-md-6">
                         <img src={"https://codingapple1.github.io/shop/shoes" + (goods.id+ Number(1)) + ".jpg"} width="100%" alt="Goods" />
