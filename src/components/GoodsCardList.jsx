@@ -1,12 +1,38 @@
 import { useState } from "react";
 import data from '../data';
 import { Row, Col, Container } from 'react-bootstrap';
+import axios from "axios";
+
+{/**
+        Ajax
+        1. XMLHttpRequest
+        2. fetch()
+        3. 외부 라이브러리(ex. axios)
+*/}
+
+axios.get('https://codingapple1.github.io/shop/data2.json')
+      .then((result) => {
+        console.log(result.data);
+      })
+      .catch(() => {
+        console.log('Ajax Fail');
+      })
 
 function GoodsCardList() {
-    let [shoes] = useState(data);
-
+    let [shoes, setShoes] = useState(data);
     return(
         <Container>
+            <button onClick={()=> {
+                axios.get('https://codingapple1.github.io/shop/data2.json').then((result) => {
+                    // 복사본을 만들어서 shoes와 ajax 통신 결과의 data를 넣어줌
+                    let shoesCopy = [...shoes, ...result.data]
+                    // shoesCopy로 state 변경
+                    setShoes(shoesCopy);
+                })
+                .catch(() => {
+                  console.log('Ajax Fail');
+                })
+            }}>상품 더 불러오기</button>
             <Row>
                 {
                     shoes.map(function(arr, idx) {
