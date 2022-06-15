@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 
 {/*
     styled-components를 통해 만든 스타일을 변수에 저장하여 사용 가능
@@ -55,7 +56,7 @@ let Box = styled.div`
 `
 
 function GoodsCardListDetail(props) {
-    
+    let [tab, setTab] = useState(0);
     // 컴포넌트가 mount시, 재 렌더링 시 update시 여기 코드가 실행된다.
     // return() => {} 와 같이 useEffect 내부에 리턴문을 두면 리턴문 먼저 실행된다.
     useEffect(() => {
@@ -95,8 +96,6 @@ function GoodsCardListDetail(props) {
         return x.id == id;
     })
 
-    console.log(goods);
-
     return (
         <>
             <div className="container">
@@ -115,8 +114,44 @@ function GoodsCardListDetail(props) {
                         <button className="btn btn-danger">주문하기</button>
                     </div>
                 </div>
+                
+                {/*
+                    defaultActiveKey는 기본적으로 눌려있을 버튼을 의미함
+                */}
+                <Nav variant="tabs" defaultActiveKey="link0">
+                    <Nav.Item>
+                        <Nav.Link onClick={() => {setTab(0)}} eventKey="link0">버튼0</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link onClick={() => {setTab(1)}} eventKey="link1">버튼1</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link onClick={() => {setTab(2)}} eventKey="link2">버튼2</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <TabContent tab={tab}></TabContent>
             </div>
         </>
+    );
+}
+
+{/*
+    props.blah가 귀찮다면
+    - 전달 되어야할 props가 여러개라면
+    - function TabContent({tab, props2})
+ */}
+
+// tab을 tab state값에 따라 return
+function TabContent({tab}) {
+    // if(tab == 0){
+    //     return <div>내용0</div>
+    // } else if(tab == 1){
+    //     return <div>내용1</div>
+    // } else if(tab ==2) {
+    //     return <div>내용2</div>
+    // }
+    return(
+        [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]
     );
 }
 
