@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
-import {Context1} from './../App';
 {/*
     styled-components를 통해 만든 스타일을 변수에 저장하여 사용 가능
     
@@ -145,7 +144,6 @@ function GoodsCardListDetail(props) {
 // tab을 tab state값에 따라 return
 function TabContent({tab}) {
     let [fade, setFade] = useState('');
-    let {stock} = useContext(Context1);   // state들이 object로 전달됨
 
     // tab state가 변할 때 end를 땠다가 다시 붙여야함
     useEffect(() => {
@@ -180,7 +178,7 @@ function TabContent({tab}) {
                      
                 - 2. Redux 등 외부 라이브러리
             */}
-            {[<div>{stock[0]}</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+            {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
         </div>
     );
 }
