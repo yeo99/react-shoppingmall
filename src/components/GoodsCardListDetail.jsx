@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
-
+import {Context1} from './../App';
 {/*
     styled-components를 통해 만든 스타일을 변수에 저장하여 사용 가능
     
@@ -57,6 +57,7 @@ let Box = styled.div`
 
 function GoodsCardListDetail(props) {
     let [tab, setTab] = useState(0);
+
     // 컴포넌트가 mount시, 재 렌더링 시 update시 여기 코드가 실행된다.
     // return() => {} 와 같이 useEffect 내부에 리턴문을 두면 리턴문 먼저 실행된다.
     useEffect(() => {
@@ -143,6 +144,19 @@ function GoodsCardListDetail(props) {
 
 // tab을 tab state값에 따라 return
 function TabContent({tab}) {
+    let [fade, setFade] = useState('');
+    let {stock} = useContext(Context1);   // state들이 object로 전달됨
+
+    // tab state가 변할 때 end를 땠다가 다시 붙여야함
+    useEffect(() => {
+        setTimeout(() => { setFade('end') }, 100)
+
+        return () => {
+            setFade('')
+        }
+    // tab이 변화할 때 마다 코드가 실행됨
+    }, [tab])
+
     // if(tab == 0){
     //     return <div>내용0</div>
     // } else if(tab == 1){
@@ -151,8 +165,32 @@ function TabContent({tab}) {
     //     return <div>내용2</div>
     // }
     return(
-        [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]
+        <div className={'start ' + fade}>
+            {/**
+                Single Page Application 단점
+                - 컴포넌트간 state 공유 어려움(부모=> 자식으로 props 전송해서 써야함)
+                - 부모 -> ... -> state사용 할 컴포넌트 이렇게 계속 전달해주는건 복잡해진다.
+
+                이런게 싫으면
+                - 1. Context API (리액트 기본문법)
+                    성능이슈, 컴포넌트 재활용이 어려운 단점들로 인해 실무에서는 잘 사용되지 않는다 함 
+                    단점1. state변경시 쓸데없는 것까지 재렌더링. 사이즈가 커질경우 성능이슈 가능성O
+                    단점2. 나중에 컴포넌트 재사용이 어려움
+
+                     
+                - 2. Redux 등 외부 라이브러리
+            */}
+            {[<div>{stock[0]}</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+        </div>
     );
 }
 
 export default GoodsCardListDetail;
+
+{/*
+    전환 애니메이션
+    1. 애니메이션 동작 전 className 만들기
+    2. 애니메이션 동작 후 className 만들기
+    3. className에 transition 속성 추가
+    4. 원할 때 클래스명 추가해줌
+*/}

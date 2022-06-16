@@ -1,17 +1,30 @@
 import './App.css';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { createContext, useState } from 'react';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
 import Error404Page from './pages/Error404Page';
 import EventPage from './pages/EventPage';
 
+export let Context1 = createContext();
+
 function App() {
+
+  let [stock] = useState([10, 11, 12]);
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={ <MainPage/>} />
-        <Route path="/detail/:id" element={ <DetailPage/> }></Route>
+        <Route path="/detail/:id" element={ 
+        // 0. createContext()를 변수에 담아서 export
+        // 1. state 전달을 원하는 컴포넌트를 감싸고
+        // 2. state를 value로 넘겨줌
+        // 3. 전달한 컴포넌트에서 import
+        <Context1.Provider value={{ stock }}>
+          <DetailPage/>
+        </Context1.Provider>
+        }></Route>
 
         {/* Nested Routes 
             - 장점1. 좀 더 단순하게 작성 가능
