@@ -11,8 +11,22 @@ import { configureStore, createSlice  } from "@reduxjs/toolkit";
 let user = createSlice({
     // 여기다가 state를 만들어주면 됨.
     name: 'user',
-    initialState: 'kim'
+    initialState: 'kim',
+    /**
+        Redux의 state 변경하는 법
+        - state 수정해주는 함수 만들고
+        - export
+        - dispatch안에 state수정하는 함수를 넣어서 사용
+    */
+    reducers : {
+        changeUserState(state) {
+            return 'john' + state
+        }
+    }
 })
+
+// Redux의 state 변경 함수를 사용하려면 export해줘야한다.
+export let { changeUserState } = user.actions;
 
 let cart = createSlice({
     name : 'cart',

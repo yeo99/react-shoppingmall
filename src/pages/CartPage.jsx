@@ -1,16 +1,13 @@
 import { Table } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TopNavBar from '../components/TopNavBar';
+import { changeUserState } from '../store';
 
 function CartPage() {
 
-    {/*
-        1. store.js(state 보관) 파일 생성
-        2. 
-    */}
-
     // 아래와 같이 쓰면 store.js에 있는 모든 state를 넣어둠
     let state = useSelector((state) => { return state })
+    let dispatch = useDispatch()    // store.js에게 요청을 보내는? 함수
     
     // 아래와 같이 필요한 부분만 꺼내 쓰는게 좋을듯?
     // let a = useSelector((state) => {return state.user})
@@ -22,6 +19,7 @@ function CartPage() {
     return (
         <div>
             <TopNavBar></TopNavBar>
+            {state.user}의 장바구니
             <Table>
                 <thead>
                     {/* 행 생성 */}
@@ -35,11 +33,15 @@ function CartPage() {
                 </thead>
                 <tbody>
                     {
-                        state.cart.map((a, i) => {
+                        state.cart.map((array, i) => {
                             return (<tr>
                             <td>{state.cart[i].id}</td>
                             <td>{state.cart[i].name}</td>
                             <td>{state.cart[i].count}</td>
+                            <td><button onClick={() => {
+                                // 작성하였던 state 변경 함수를 dispatch()로 감싸서 사용
+                                dispatch(changeUserState())
+                            }}>+</button></td>
                         </tr>);
                         })
                     }
