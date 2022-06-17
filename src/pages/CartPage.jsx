@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import TopNavBar from '../components/TopNavBar';
 
-function Cart() {
+function CartPage() {
 
     {/*
         1. store.js(state 보관) 파일 생성
@@ -10,14 +10,14 @@ function Cart() {
     */}
 
     // 아래와 같이 쓰면 store.js에 있는 모든 state를 넣어둠
-    let a = useSelector((state) => { return state })
-
+    let state = useSelector((state) => { return state })
+    
     // 아래와 같이 필요한 부분만 꺼내 쓰는게 좋을듯?
     // let a = useSelector((state) => {return state.user})
 
     // 쓸 때는 필요한것만 꺼내서 쓰자
     // console.log(a.user);
-    console.log(a.stock);
+    console.log(state.cart);
     
     return (
         <div>
@@ -34,16 +34,19 @@ function Cart() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>안녕</td>
-                        <td>안녕</td>
-                        <td>안녕</td>
-                    </tr>
+                    {
+                        state.cart.map((a, i) => {
+                            return (<tr>
+                            <td>{state.cart[i].id}</td>
+                            <td>{state.cart[i].name}</td>
+                            <td>{state.cart[i].count}</td>
+                        </tr>);
+                        })
+                    }
                 </tbody>
             </Table>
         </div>
     );
 }
 
-export default Cart;
+export default CartPage;

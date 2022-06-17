@@ -4,7 +4,7 @@ import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
 import Error404Page from './pages/Error404Page';
 import EventPage from './pages/EventPage';
-import Cart from './pages/Cart';
+import CartPage from './pages/CartPage';
 
 function App() {
 
@@ -26,7 +26,7 @@ function App() {
             - 언제쓰나? 여러 유사한 페이지 필요할 때(글자 하나만 살짝살짝,,,)
         */}
 
-        <Route path="/cart" element={<Cart></Cart>}></Route>
+        <Route path="/cart" element={<CartPage></CartPage>}></Route>
 
         <Route path="/about" element={ <About/> }>
           <Route path="member" element={ <div>Member page</div> }></Route>
