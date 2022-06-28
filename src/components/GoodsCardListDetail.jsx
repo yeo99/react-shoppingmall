@@ -66,6 +66,9 @@ function GoodsCardListDetail(props) {
             document.querySelector('.alert.alert-warning').remove();
         }, 2000);
 
+        // GoodsCardListDetail이 렌더링 된다면 로컬스토리지에 추가
+        
+
         return () => {
             // 기존 코드를 제거하는 용도로 자주 쓰인다(cleanup function)
             // 만약 useEffect에 서버로 데이터를 요청하는 코드가 있고, 넘어오는중 재렌더링이 되어버린다면

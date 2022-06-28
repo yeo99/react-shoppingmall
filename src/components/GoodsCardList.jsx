@@ -2,7 +2,6 @@ import { useState } from "react";
 import data from '../data';
 import { Row, Col, Container } from 'react-bootstrap';
 import axios from "axios";
-import { Navigate, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -72,6 +71,7 @@ function GoodsCardList() {
 
 function GoodsCard(props) {
     let navigate = useNavigate();
+    
     return(
         <Col md={4}
             onClick={() => {
