@@ -28,10 +28,6 @@ let user = createSlice({
         increaseAgeState(state, action) {
             state.age += action.payload;
         },
-
-        incProductQunt(state, action, order) {
-            state.cart += action.payload;
-        },
     }
 })
 

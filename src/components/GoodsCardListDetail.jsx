@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
+import { addGoodsToCart } from '../store';
+import { useDispatch } from 'react-redux';
 {/*
     styled-components를 통해 만든 스타일을 변수에 저장하여 사용 가능
     
@@ -56,7 +58,7 @@ let Box = styled.div`
 
 function GoodsCardListDetail(props) {
     let [tab, setTab] = useState(0);
-
+    let dispatch = useDispatch();
     // 컴포넌트가 mount시, 재 렌더링 시 update시 여기 코드가 실행된다.
     // return() => {} 와 같이 useEffect 내부에 리턴문을 두면 리턴문 먼저 실행된다.
     useEffect(() => {
@@ -111,7 +113,10 @@ function GoodsCardListDetail(props) {
                         <h4 className="pt-5">{goods.title}</h4>
                         <p>{goods.content}</p>
                         <p>{goods.price}</p>
-                        <button className="btn btn-danger">주문하기</button>
+                        <button className="btn btn-danger" onClick={() => {
+                            dispatch(addGoodsToCart( { id: 1, name : 'Red Knit', count : 1}))
+                            alert('장바구니에 추가되었습니다!')
+                        }}>주문하기</button>
                     </div>
                 </div>
                 

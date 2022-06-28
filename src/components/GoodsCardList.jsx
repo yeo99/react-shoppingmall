@@ -2,6 +2,9 @@ import { useState } from "react";
 import data from '../data';
 import { Row, Col, Container } from 'react-bootstrap';
 import axios from "axios";
+import { Navigate, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 {/**
         Ajax
@@ -68,8 +71,13 @@ function GoodsCardList() {
 }
 
 function GoodsCard(props) {
+    let navigate = useNavigate();
     return(
-        <Col md={4}>
+        <Col md={4}
+            onClick={() => {
+            navigate('/detail/' + (props.idx - 1));
+        }}
+        >
             <img src={'https://codingapple1.github.io/shop/shoes' + props.idx + '.jpg'} width="80%" alt="Shoes" />
             <h4>{props.shoes.title}</h4>
             <p>{props.shoes.price}</p>

@@ -15,7 +15,8 @@ function TopNavBar() {
                 - navigate(1)의 경우 앞으로 한 페이지를 이동하는것을 의미함, -면 뒤로
             */}
             <Nav.Link onClick={() => { navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link>
+            {/* <Nav.Link onClick={() => { navigate('/detail') }}>Detail</Nav.Link> */}
+            <Nav.Link onClick={() => { navigate('/cart')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

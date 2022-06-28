@@ -1,7 +1,8 @@
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import TopNavBar from '../components/TopNavBar';
-import { changeUserState, increaseAgeState, incProductQunt } from './../store/userSlice';
+import { addCount } from '../store';
+import { increaseAgeState } from './../store/userSlice';
 
 function CartPage() {
 
@@ -41,9 +42,10 @@ function CartPage() {
                             <td>{state.cart[i].id}</td>
                             <td>{state.cart[i].name}</td>
                             <td>{state.cart[i].count}</td>
-                            <td><button onClick={() => {
+                            <td><button onClick={ () => {
+                                dispatch(addCount(state.cart[i].id));
                                 // 작성하였던 state 변경 함수를 dispatch()로 감싸서 사용
-                                dispatch(incProductQunt(_,_,state.cart[i].id))
+                                
                                 // 1. 수량 추가를 누르면 이 id와 동일한 id가진 상품을 + 1해주자
                                 // 2. 주문하기 버튼 누르면 장바구니에 상품 추가하기
                             }}>+</button></td>
