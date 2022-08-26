@@ -9,7 +9,7 @@ function DetailPage(props) {
     const location = useLocation();
 
     useEffect(() => {
-        localStorage.setItem('watched', location.pathname.substring(8));  
+        
     }, [])
 
     return(

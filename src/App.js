@@ -6,15 +6,54 @@ import Error404Page from './pages/Error404Page';
 import EventPage from './pages/EventPage';
 import CartPage from './pages/CartPage';
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+
 
 function App() {
   // Set 자료형을 이용하여 값이 중복하여 들어가지 않도록
   const watchedArr = new Set();
-  console.log(watchedArr)
   useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watchedArr))
-    console.log(watchedArr)
-  }, [])
+
+  })
+
+  // react-query를 이용하여 ajax 요청
+  let result = useQuery('이름', () => {
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+      console.log('요청됨');
+      return a.data
+    })//,
+    // refetch되는 간격 지정 가능. 아래의 경우 새로운 데이터를 가져오고 2초 안에는 다시 새로운 데이터를 가져오지 않음
+    // { staleTime : 2000}
+  })
+
+  // Ajax 통신의 결과
+  // result.data;
+
+  // Ajax 요청이 로딩중 일 때 true값을 가짐
+  // result.isLoading
+  
+  // Ajax 요청이 실패했을 때 true
+  // result.error
+
+  /**
+   * ex)
+   * {result.isLoading && '로딩중'}
+   * {result.error && '에러남'}
+   * {result.data && result.data.name}
+   */
+
+  /**
+   * ajax 성공 결과를 캐싱할 수 있음.
+   * ex) 12시 10분에 userdata.json GET요청
+   * ex) 12시 13분에 userdata.json GET요청
+   * => react-query가 12시 10분 결과를 우선 보여줌, 그 다음에 GET 요청함
+   */
+
+  /**
+   * 실시간 데이터가 중요한 서비스가 아니라면 그닥..
+   * redux-toolkit 설치하면 RTK Query도 자동 설치됨.
+   */
 
   return (
     <div className="App">
@@ -112,3 +151,14 @@ export default App;
  * - 주의 1) 중복번호는 막기 => set자료형을 쓰면 중복 막기가 편하다한다
  * - 미리 Array가 있어야하니까..
  * */ 
+
+/**
+ * React-query
+ * 
+ * 1. ajax 성공/실패시 html 보여주려면?
+ * 2. 몇초마다 자동으로 ajax 요청?
+ * 3. 실패시 몇초 후 요청 재시도?
+ * 4. prefetch?
+ * 
+ * - React-Query가 유용한 분야는 코인거래소, 실시간SNS와 같은 실시간 데이터를 계속 가져와야하는 사이트들이 쓰면 유용함.
+ */
