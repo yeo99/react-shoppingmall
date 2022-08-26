@@ -1,14 +1,16 @@
 import './App.css';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
-import Error404Page from './pages/Error404Page';
+// const errorPage = lazy(() => import ('./pages/Error404Page');
 import EventPage from './pages/EventPage';
 import CartPage from './pages/CartPage';
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
+// lazy를 import해와서 초기 로딩시에 필요없는 404페이지가 lazy loading되도록 변경(예시)
+const Error404Page = lazy(() => import('./pages/Error404Page'));
 
 function App() {
   // Set 자료형을 이용하여 값이 중복하여 들어가지 않도록
@@ -86,7 +88,16 @@ function App() {
         </Route>
 
         {/* 지정된 Route path외의 모든 페이지 */}
-        <Route path="*" element={ <Error404Page></Error404Page> }></Route>
+        <Route path="*" element={
+          // 페이지를 lazy loading할 때, 사용자가 빈 화면을 보게 될 가능성이 있는데
+          // Suspense 컴포넌트를 감싸주면 로딩 중에 UI를 보여줄 수 있다.
+          // 빈 화면 대신 띄워줄 화면을 작성
+          // <Routes> 전체를 <Suspense></Suspense>로 감싸서 활용할수도 있다.
+          <Suspense fallback={<div>로딩중임</div>}>
+            <Error404Page></Error404Page>
+          </Suspense>
+          }>
+        </Route>
       </Routes>
     </div>
   );
@@ -161,4 +172,16 @@ export default App;
  * 4. prefetch?
  * 
  * - React-Query가 유용한 분야는 코인거래소, 실시간SNS와 같은 실시간 데이터를 계속 가져와야하는 사이트들이 쓰면 유용함.
+ */
+
+/**
+ * React Developer Tools 확장프로그램을 이용
+ * - 컴포넌트 구조와 props값이 어떻게 구성되어있는지 알 수 있다.
+ * - Profiler를 통해 성능 측정이 가능하다.(ms단위로 걸린 시간 표시)
+ * 
+ * Redux DevTools를 통해 state의 흐름을 알 수 있다. store를 한눈에 볼 수 있다.
+ * 
+ * SPA 특징
+ * - 배포하면 js파일 하나에 모든 코드가 다 들어간다.
+ * - 이걸 다운로드 받느니라 SPA로 제작된 웹들은 로딩속도가 느린편인데 이런 문제를 해결하기위해 Lazy Loading을 적용시킬 수 있다.
  */
